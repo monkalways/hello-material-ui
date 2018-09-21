@@ -4,7 +4,7 @@ import { reduxForm, Field } from 'redux-form';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { TextField, LinearProgress } from '@material-ui/core';
+import { TextField, LinearProgress, Typography } from '@material-ui/core';
 
 const renderTextField = ({
   input,
@@ -38,8 +38,17 @@ const validate = values => {
   return errors;
 };
 
-const LoginComponet = ({ classes, handleSubmit, reset, loading }) => (
+const LoginComponet = ({
+  classes,
+  handleSubmit,
+  reset,
+  loading,
+  authenticated,
+}) => (
   <form className={classes.root} onSubmit={handleSubmit}>
+    <Typography variant="body1" color="secondary">
+      {authenticated ? 'Login success' : 'Fail to login'}
+    </Typography>
     <Field
       name="username"
       component={renderTextField}
@@ -71,12 +80,16 @@ const LoginComponet = ({ classes, handleSubmit, reset, loading }) => (
     >
       Reset
     </Button>
-    <LinearProgress className={classes.progress} />
+    {loading && <LinearProgress className={classes.progress} />}
   </form>
 );
 
 LoginComponet.propTypes = {
   classes: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  authenticated: PropTypes.bool.isRequired,
 };
 
 const enhance = compose(

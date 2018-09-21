@@ -1,16 +1,19 @@
 import actions from './actions';
 
-// drawer
-const openDrawer = actions.openDrawer;
-const closeDrawer = actions.closeDrawer;
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-// modal
-const openModal = actions.openModal;
-const closeModal = actions.closeModal;
+// login
+const login = ({ username, password }) => async dispatch => {
+  await dispatch(actions.startLogin());
+  await timeout(3000);
+
+  const authenticated = username === 'eps' && password === '123';
+
+  await dispatch(actions.endLogin({ authenticated }));
+};
 
 export default {
-  openDrawer,
-  closeDrawer,
-  openModal,
-  closeModal,
+  login,
 };

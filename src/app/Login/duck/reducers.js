@@ -1,51 +1,31 @@
-import { combineReducers } from 'redux';
 import types from './types';
 
 /* State Shape
 {
-    drawer: bool,
-    modal: {
-      isModalOpen: bool,
-      title: string
-    }
+    loading: bool,
+    authenticated: bool
 }
 */
 
-const drawerReducer = (state = false, action) => {
-  switch (action.type) {
-    case types.OPEN_DRAWER:
-      return true;
-    case types.CLOSE_DRAWER:
-      return false;
-    default:
-      return state;
-  }
+const loginReducerInitialState = {
+  loading: false,
+  authenticated: false,
 };
 
-const modalReducerInitialState = {
-  isModalOpen: false,
-  title: null,
-};
-
-const modalReducer = (state = modalReducerInitialState, action) => {
+const loginReducer = (state = loginReducerInitialState, action) => {
   switch (action.type) {
-    case types.OPEN_MODAL:
+    case types.START_LOGIN:
+      return {
+        loading: true,
+      };
+    case types.END_LOGIN:
       return {
         ...action,
-        isModalOpen: true,
-      };
-    case types.CLOSE_MODAL:
-      return {
-        isModalOpen: false,
-        title: null,
+        loading: false,
       };
     default:
       return state;
   }
 };
 
-const reducer = combineReducers({
-  drawer: drawerReducer,
-});
-
-export default reducer;
+export default loginReducer;

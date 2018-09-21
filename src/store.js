@@ -12,9 +12,9 @@ export default function configureStore(initialState) {
     composeEnhancers(
       applyMiddleware(
         thunkMiddleware,
-        // createLogger({
-        //   // ...options
-        // }),
+        createLogger({
+          // ...options
+        }),
       ),
     ),
   );

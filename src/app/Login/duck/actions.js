@@ -1,25 +1,15 @@
 import types from './types';
 
-const openDrawer = () => ({
-  type: types.OPEN_DRAWER,
+const startLogin = () => ({
+  type: types.START_LOGIN,
 });
 
-const closeDrawer = () => ({
-  type: types.CLOSE_DRAWER,
-});
-
-const openModal = ({ title }) => ({
-  type: types.OPEN_MODAL,
-  title,
-});
-
-const closeModal = () => ({
-  type: types.CLOSE_MODAL,
+const endLogin = ({ authenticated }) => ({
+  type: types.END_LOGIN,
+  authenticated,
 });
 
 export default {
-  openDrawer,
-  closeDrawer,
-  openModal,
-  closeModal,
+  startLogin,
+  endLogin,
 };

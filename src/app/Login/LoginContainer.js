@@ -1,27 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import LoginComponent from './LoginComponent';
+import { operations } from './duck';
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     handleSignIn: () => {
-//       dispatch(
-//         operations.openModal({
-//           title: 'Welcome back',
-//           description: 'Login in your account.',
-//         }),
-//       );
-//     },
-//   };
-// };
+const mapStateToProps = state => {
+  const { login } = state;
+  return {
+    loading: login.loading,
+    authenticated: login.authenticated,
+  };
+};
 
-const LoginContainer = () => (
-  <LoginComponent onSubmit={values => console.log(values)} />
+const mapDispatchToProps = dispatch => {
+  return {
+    handleSignIn: ({ username, password }) => {
+      dispatch(
+        operations.login({
+          username,
+          password,
+        }),
+      );
+    },
+  };
+};
+
+const LoginContainer = ({ handleSignIn, ...rest }) => (
+  <LoginComponent onSubmit={values => handleSignIn(values)} {...rest} />
 );
 
-// const ConnectedLoginContainer = connect(
-//   null,
-//   mapDispatchToProps,
-// )(LoginContainer);
+const ConnectedLoginContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginContainer);
 
-export default LoginContainer;
+export default ConnectedLoginContainer;
